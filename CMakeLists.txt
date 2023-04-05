@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.19)
-project(bootstrap-cpp-kata CXX)
+project(gilded-rose-refactoring-cpp-kata CXX)
 enable_testing()
 
 set(CMAKE_CXX_STANDARD 17)
@@ -18,7 +18,7 @@ foreach(test ${tests})
     target_link_libraries(${name} PRIVATE GTest::gmock GTest::gmock_main)
 endforeach()
 
-add_custom_target(  
+add_custom_target(
     copy-compile-commands ALL
     ${CMAKE_COMMAND} -E copy_if_different
     ${CMAKE_BINARY_DIR}/compile_commands.json
