@@ -15,13 +15,21 @@ public:
     int         quality;
 };
 
+class ItemFactory {
+public:
+    static std::unique_ptr<Item> create_item(const std::string& name, int sell_in, int quality)
+    {
+        return std::make_unique<Item>(name, sell_in, quality);
+    }
+};
+
 class GildedRose {
 public:
     GildedRose() = default;
 
     void add_item(std::string name, int sell_in, int quality)
     {
-        items.emplace_back(std::make_unique<Item>(name, sell_in, quality));
+        items.push_back(ItemFactory::create_item(name, sell_in, quality));
     }
 
     void update_quality()
