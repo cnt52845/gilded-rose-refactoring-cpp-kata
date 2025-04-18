@@ -113,3 +113,11 @@ TEST_F(GildedRoseTest, test_conjured_item_quality_decreases_by_four_after_sell_i
 
     EXPECT_EQ(inn.items.at(0)->quality, 6);
 }
+
+TEST_F(GildedRoseTest, test_conjured_item_quality_is_never_negative)
+{
+    inn.add_item("Conjured Item", 0, 3);
+    inn.update_quality();
+
+    EXPECT_EQ(inn.items.at(0)->quality, 0);
+}
