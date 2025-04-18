@@ -10,6 +10,18 @@ public:
     {
     }
 
+    virtual void update_quality()
+    {
+        sell_in--;
+        quality--;
+        if (sell_in < 0) {
+            quality--;
+        }
+        if (quality < 0) {
+            quality = 0;
+        }
+    }
+
     std::string name;
     int         sell_in;
     int         quality;
@@ -35,51 +47,7 @@ public:
     void update_quality()
     {
         for (auto& item : items) {
-            if (item->name != "Aged Brie" &&
-                item->name != "Backstage passes to a TAFKAL80ETC concert") {
-                if (item->quality > 0) {
-                    if (item->name != "Sulfuras, Hand of Ragnaros")
-                        item->quality--;
-                }
-            }
-            else {
-                if (item->quality < 50) {
-                    item->quality++;
-
-                    if (item->name == "Backstage passes to a TAFKAL80ETC concert") {
-                        if (item->sell_in < 11) {
-                            if (item->quality < 50)
-                                item->quality++;
-                        }
-
-                        if (item->sell_in < 6) {
-                            if (item->quality < 50)
-                                item->quality++;
-                        }
-                    }
-                }
-            }
-
-            if (item->name != "Sulfuras, Hand of Ragnaros")
-                item->sell_in--;
-
-            if (item->sell_in < 0) {
-                if (item->name != "Aged Brie") {
-                    if (item->name != "Backstage passes to a TAFKAL80ETC concert") {
-                        if (item->quality > 0) {
-                            if (item->name != "Sulfuras, Hand of Ragnaros")
-                                item->quality--;
-                        }
-                    }
-                    else {
-                        item->quality = 0;
-                    }
-                }
-                else {
-                    if (item->quality < 50)
-                        item->quality++;
-                }
-            }
+            item->update_quality();
         }
     }
 
