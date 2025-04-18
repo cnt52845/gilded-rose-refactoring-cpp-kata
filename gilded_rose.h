@@ -68,6 +68,16 @@ public:
     }
 };
 
+class Sulfuras : public Item {
+public:
+    Sulfuras(std::string name, int sell_in) : Item(std::move(name), sell_in, 80) {}
+
+    void update_quality() override
+    {
+        // Sulfuras does not change in quality or sell_in
+    }
+};
+
 class ItemFactory {
 public:
     static std::unique_ptr<Item> create_item(const std::string& name, int sell_in, int quality)
@@ -77,6 +87,9 @@ public:
         }
         else if (name.find("Backstage passes to ") == 0) {
             return std::make_unique<BackstagePass>(name, sell_in, quality);
+        }
+        else if (name.find("Sulfuras") == 0) {
+            return std::make_unique<Sulfuras>(name, sell_in);
         }
         return std::make_unique<Item>(name, sell_in, quality);
     }
