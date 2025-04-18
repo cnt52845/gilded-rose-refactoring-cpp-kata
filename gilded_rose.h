@@ -40,12 +40,43 @@ public:
     }
 };
 
+class BackstagePass : public Item {
+public:
+    BackstagePass(std::string name, int sell_in, int quality)
+        : Item(std::move(name), sell_in, quality)
+    {
+    }
+
+    void update_quality() override
+    {
+        sell_in--;
+        if (sell_in < 0) {
+            quality = 0;
+        }
+        else if (sell_in <= 5) {
+            quality += 3;
+        }
+        else if (sell_in <= 10) {
+            quality += 2;
+        }
+        else {
+            quality++;
+        }
+        if (quality > 50) {
+            quality = 50;
+        }
+    }
+};
+
 class ItemFactory {
 public:
     static std::unique_ptr<Item> create_item(const std::string& name, int sell_in, int quality)
     {
         if (name == "Aged Brie") {
             return std::make_unique<AgedBrie>(sell_in, quality);
+        }
+        else if (name.find("Backstage passes to ") == 0) {
+            return std::make_unique<BackstagePass>(name, sell_in, quality);
         }
         return std::make_unique<Item>(name, sell_in, quality);
     }
