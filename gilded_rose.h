@@ -10,6 +10,54 @@ public:
     {
     }
 
+    void update_quality()
+    {
+        if (name != "Aged Brie" && name != "Backstage passes to a TAFKAL80ETC concert") {
+            if (quality > 0) {
+                if (name != "Sulfuras, Hand of Ragnaros")
+                    quality--;
+            }
+        }
+        else {
+            if (quality < 50) {
+                quality++;
+
+                if (name == "Backstage passes to a TAFKAL80ETC concert") {
+                    if (sell_in < 11) {
+                        if (quality < 50)
+                            quality++;
+                    }
+
+                    if (sell_in < 6) {
+                        if (quality < 50)
+                            quality++;
+                    }
+                }
+            }
+        }
+
+        if (name != "Sulfuras, Hand of Ragnaros")
+            sell_in--;
+
+        if (sell_in < 0) {
+            if (name != "Aged Brie") {
+                if (name != "Backstage passes to a TAFKAL80ETC concert") {
+                    if (quality > 0) {
+                        if (name != "Sulfuras, Hand of Ragnaros")
+                            quality--;
+                    }
+                }
+                else {
+                    quality = 0;
+                }
+            }
+            else {
+                if (quality < 50)
+                    quality++;
+            }
+        }
+    }
+
     std::string name;
     int         sell_in;
     int         quality;
@@ -27,51 +75,7 @@ public:
     void update_quality()
     {
         for (auto& item : items) {
-            if (item->name != "Aged Brie" &&
-                item->name != "Backstage passes to a TAFKAL80ETC concert") {
-                if (item->quality > 0) {
-                    if (item->name != "Sulfuras, Hand of Ragnaros")
-                        item->quality--;
-                }
-            }
-            else {
-                if (item->quality < 50) {
-                    item->quality++;
-
-                    if (item->name == "Backstage passes to a TAFKAL80ETC concert") {
-                        if (item->sell_in < 11) {
-                            if (item->quality < 50)
-                                item->quality++;
-                        }
-
-                        if (item->sell_in < 6) {
-                            if (item->quality < 50)
-                                item->quality++;
-                        }
-                    }
-                }
-            }
-
-            if (item->name != "Sulfuras, Hand of Ragnaros")
-                item->sell_in--;
-
-            if (item->sell_in < 0) {
-                if (item->name != "Aged Brie") {
-                    if (item->name != "Backstage passes to a TAFKAL80ETC concert") {
-                        if (item->quality > 0) {
-                            if (item->name != "Sulfuras, Hand of Ragnaros")
-                                item->quality--;
-                        }
-                    }
-                    else {
-                        item->quality = 0;
-                    }
-                }
-                else {
-                    if (item->quality < 50)
-                        item->quality++;
-                }
-            }
+            item->update_quality();
         }
     }
 
