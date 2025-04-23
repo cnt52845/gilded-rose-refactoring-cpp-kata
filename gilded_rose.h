@@ -48,20 +48,21 @@ public:
 
     void update_quality_backstage_passes()
     {
-        if (quality < 50) {
-            quality++;
-            if (sell_in < 11) {
-                if (quality < 50)
-                    quality++;
-            }
-            if (sell_in < 6) {
-                if (quality < 50)
-                    quality++;
-            }
-        }
         sell_in--;
         if (sell_in < 0) {
             quality = 0;
+        }
+        else {
+            quality++;
+            if (sell_in < 10) {
+                quality++;
+            }
+            if (sell_in < 5) {
+                quality++;
+            }
+            if (quality > 50) {
+                quality = 50;
+            }
         }
     }
 
