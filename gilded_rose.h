@@ -12,7 +12,12 @@ public:
 
     void update_quality()
     {
-        if (name != "Aged Brie" && name != "Backstage passes to a TAFKAL80ETC concert") {
+        if (name == "Aged Brie") {
+            update_quality_aged_brie();
+            return;
+        }
+
+        if (name != "Backstage passes to a TAFKAL80ETC concert") {
             if (quality > 0) {
                 if (name != "Sulfuras, Hand of Ragnaros")
                     quality--;
@@ -40,21 +45,23 @@ public:
             sell_in--;
 
         if (sell_in < 0) {
-            if (name != "Aged Brie") {
-                if (name != "Backstage passes to a TAFKAL80ETC concert") {
-                    if (quality > 0) {
-                        if (name != "Sulfuras, Hand of Ragnaros")
-                            quality--;
-                    }
-                }
-                else {
-                    quality = 0;
+            if (name != "Backstage passes to a TAFKAL80ETC concert") {
+                if (quality > 0) {
+                    if (name != "Sulfuras, Hand of Ragnaros")
+                        quality--;
                 }
             }
             else {
-                if (quality < 50)
-                    quality++;
+                quality = 0;
             }
+        }
+    }
+
+    void update_quality_aged_brie()
+    {
+        sell_in--;
+        if (quality < 50) {
+            quality++;
         }
     }
 
