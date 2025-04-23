@@ -105,3 +105,11 @@ TEST_F(GildedRoseTest, test_conjured_item_quality_decreases_by_two_each_day)
 
     EXPECT_EQ(inn.items.at(0)->quality, 8);
 }
+
+TEST_F(GildedRoseTest, test_conjured_item_quality_decreases_by_four_after_sell_in_date)
+{
+    inn.add_item("Conjured", 0, 5);
+    inn.update_quality();
+
+    EXPECT_EQ(inn.items.at(0)->quality, 1);
+}
