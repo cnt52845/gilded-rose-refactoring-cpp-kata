@@ -85,6 +85,19 @@ public:
     }
 };
 
+class Conjured : public Item {
+public:
+    Conjured(std::string name, int sell_in, int quality) : Item(std::move(name), sell_in, quality)
+    {
+    }
+
+    void update_quality() override
+    {
+        sell_in--;
+        quality -= 2;
+    }
+};
+
 class ItemFactory {
 public:
     static std::unique_ptr<Item> create_item(std::string name, int sell_in, int quality)
@@ -97,6 +110,9 @@ public:
         }
         else if (name == "Sulfuras, Hand of Ragnaros") {
             return std::make_unique<Sulfuras>(name, sell_in, quality);
+        }
+        else if (name == "Conjured") {
+            return std::make_unique<Conjured>(name, sell_in, quality);
         }
         else {
             return std::make_unique<Item>(name, sell_in, quality);
