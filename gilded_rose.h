@@ -22,18 +22,20 @@ public:
             return;
         }
 
-        if (quality > 0) {
-            if (name != "Sulfuras, Hand of Ragnaros")
-                quality--;
+        if (name == "Sulfuras, Hand of Ragnaros") {
+            update_quality_sulfuras();
+            return;
         }
 
-        if (name != "Sulfuras, Hand of Ragnaros")
-            sell_in--;
+        if (quality > 0) {
+            quality--;
+        }
+
+        sell_in--;
 
         if (sell_in < 0) {
             if (quality > 0) {
-                if (name != "Sulfuras, Hand of Ragnaros")
-                    quality--;
+                quality--;
             }
         }
     }
@@ -64,6 +66,11 @@ public:
                 quality = 50;
             }
         }
+    }
+
+    void update_quality_sulfuras()
+    {
+        // Sulfuras does not change in quality or sell_in
     }
 
     std::string name;
