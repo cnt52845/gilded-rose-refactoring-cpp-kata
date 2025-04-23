@@ -17,42 +17,23 @@ public:
             return;
         }
 
-        if (name != "Backstage passes to a TAFKAL80ETC concert") {
-            if (quality > 0) {
-                if (name != "Sulfuras, Hand of Ragnaros")
-                    quality--;
-            }
+        if (name == "Backstage passes to a TAFKAL80ETC concert") {
+            update_quality_backstage_passes();
+            return;
         }
-        else {
-            if (quality < 50) {
-                quality++;
 
-                if (name == "Backstage passes to a TAFKAL80ETC concert") {
-                    if (sell_in < 11) {
-                        if (quality < 50)
-                            quality++;
-                    }
-
-                    if (sell_in < 6) {
-                        if (quality < 50)
-                            quality++;
-                    }
-                }
-            }
+        if (quality > 0) {
+            if (name != "Sulfuras, Hand of Ragnaros")
+                quality--;
         }
 
         if (name != "Sulfuras, Hand of Ragnaros")
             sell_in--;
 
         if (sell_in < 0) {
-            if (name != "Backstage passes to a TAFKAL80ETC concert") {
-                if (quality > 0) {
-                    if (name != "Sulfuras, Hand of Ragnaros")
-                        quality--;
-                }
-            }
-            else {
-                quality = 0;
+            if (quality > 0) {
+                if (name != "Sulfuras, Hand of Ragnaros")
+                    quality--;
             }
         }
     }
@@ -62,6 +43,25 @@ public:
         sell_in--;
         if (quality < 50) {
             quality++;
+        }
+    }
+
+    void update_quality_backstage_passes()
+    {
+        if (quality < 50) {
+            quality++;
+            if (sell_in < 11) {
+                if (quality < 50)
+                    quality++;
+            }
+            if (sell_in < 6) {
+                if (quality < 50)
+                    quality++;
+            }
+        }
+        sell_in--;
+        if (sell_in < 0) {
+            quality = 0;
         }
     }
 
