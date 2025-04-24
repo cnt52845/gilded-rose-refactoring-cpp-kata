@@ -78,6 +78,34 @@ public:
     }
 };
 
+class BackstagePasses : public Item {
+public:
+    BackstagePasses(std::string name, int sell_in, int quality)
+        : Item(std::move(name), sell_in, quality)
+    {
+    }
+
+    void update_quality() override
+    {
+        sell_in--;
+        if (sell_in < 0) {
+            quality = 0;
+        }
+        else {
+            quality++;
+            if (sell_in < 10) {
+                quality++;
+            }
+            if (sell_in < 5) {
+                quality++;
+            }
+            if (quality > 50) {
+                quality = 50;
+            }
+        }
+    }
+};
+
 class GildedRose {
 public:
     GildedRose() = default;
@@ -86,6 +114,10 @@ public:
     {
         if (name == "Aged Brie") {
             items.emplace_back(std::make_unique<AgedBrie>(name, sell_in, quality));
+            return;
+        }
+        if (name == "Backstage passes to a TAFKAL80ETC concert") {
+            items.emplace_back(std::make_unique<BackstagePasses>(name, sell_in, quality));
             return;
         }
         items.emplace_back(std::make_unique<Item>(name, sell_in, quality));
