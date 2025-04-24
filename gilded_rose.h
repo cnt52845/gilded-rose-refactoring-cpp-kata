@@ -10,7 +10,7 @@ public:
     {
     }
 
-    void update_quality()
+    virtual void update_quality()
     {
         if (name != "Aged Brie" && name != "Backstage passes to a TAFKAL80ETC concert") {
             if (quality > 0) {
@@ -63,12 +63,31 @@ public:
     int         quality;
 };
 
+class AgedBrie : public Item {
+public:
+    AgedBrie(std::string name, int sell_in, int quality) : Item(std::move(name), sell_in, quality)
+    {
+    }
+
+    void update_quality() override
+    {
+        sell_in--;
+        if (quality < 50) {
+            quality++;
+        }
+    }
+};
+
 class GildedRose {
 public:
     GildedRose() = default;
 
     void add_item(std::string name, int sell_in, int quality)
     {
+        if (name == "Aged Brie") {
+            items.emplace_back(std::make_unique<AgedBrie>(name, sell_in, quality));
+            return;
+        }
         items.emplace_back(std::make_unique<Item>(name, sell_in, quality));
     }
 
