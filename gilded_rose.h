@@ -106,6 +106,18 @@ public:
     }
 };
 
+class Sulfuras : public Item {
+public:
+    Sulfuras(std::string name, int sell_in, int quality) : Item(std::move(name), sell_in, quality)
+    {
+    }
+
+    void update_quality() override
+    {
+        // Sulfuras does not change in quality or sell_in
+    }
+};
+
 class GildedRose {
 public:
     GildedRose() = default;
@@ -118,6 +130,10 @@ public:
         }
         if (name == "Backstage passes to a TAFKAL80ETC concert") {
             items.emplace_back(std::make_unique<BackstagePasses>(name, sell_in, quality));
+            return;
+        }
+        if (name == "Sulfuras, Hand of Ragnaros") {
+            items.emplace_back(std::make_unique<Sulfuras>(name, sell_in, quality));
             return;
         }
         items.emplace_back(std::make_unique<Item>(name, sell_in, quality));
