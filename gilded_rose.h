@@ -82,25 +82,30 @@ public:
     }
 };
 
+class ItemFactory {
+public:
+    static std::unique_ptr<Item> create_item(const std::string& name, int sell_in, int quality)
+    {
+        if (name == "Aged Brie") {
+            return std::make_unique<AgedBrie>(name, sell_in, quality);
+        }
+        if (name == "Backstage passes to a TAFKAL80ETC concert") {
+            return std::make_unique<BackstagePasses>(name, sell_in, quality);
+        }
+        if (name == "Sulfuras, Hand of Ragnaros") {
+            return std::make_unique<Sulfuras>(name, sell_in, quality);
+        }
+        return std::make_unique<Item>(name, sell_in, quality);
+    }
+};
+
 class GildedRose {
 public:
     GildedRose() = default;
 
     void add_item(std::string name, int sell_in, int quality)
     {
-        if (name == "Aged Brie") {
-            items.emplace_back(std::make_unique<AgedBrie>(name, sell_in, quality));
-            return;
-        }
-        if (name == "Backstage passes to a TAFKAL80ETC concert") {
-            items.emplace_back(std::make_unique<BackstagePasses>(name, sell_in, quality));
-            return;
-        }
-        if (name == "Sulfuras, Hand of Ragnaros") {
-            items.emplace_back(std::make_unique<Sulfuras>(name, sell_in, quality));
-            return;
-        }
-        items.emplace_back(std::make_unique<Item>(name, sell_in, quality));
+        items.push_back(ItemFactory::create_item(name, sell_in, quality));
     }
 
     void update_quality()
